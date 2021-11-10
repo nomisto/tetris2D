@@ -3,6 +3,8 @@ AnimationHandler = function(){
 	var animationsProgress = [];
 	
 	var gravitationSpeed = 850;
+	// Lower = Faster
+	var rotationSpeed = 250;
 	
 	var current;
 	
@@ -80,7 +82,7 @@ AnimationHandler = function(){
 	
 	// returns the angle for one rotation animationstep using the deltatime
 	function getAngle(){
-		var angle = (75 * deltaTime) / 1000.0;		
+		var angle = (75 * deltaTime) / rotationSpeed;		
 		if ((angle+animationsProgress[0]) < 90) {
 			animationsProgress[0] += angle;
 		}
