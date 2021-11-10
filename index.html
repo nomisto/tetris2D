@@ -1,0 +1,71 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+		
+		<script type="text/javascript" src="util/gl-matrix.js"></script>
+		<script type="text/javascript" src="util/webgl-utils.js"></script>
+		
+		<script type="text/javascript" src="src/objects/shapes.js"></script>
+		<script type="text/javascript" src="src/objects/background.js"></script>
+		<script type="text/javascript" src="src/objects/block.js"></script>
+		<script type="text/javascript" src="src/objects/texture.js"></script>
+		<script type="text/javascript" src="src/objects/tetromino.js"></script>
+		
+		<script type="text/javascript" src="src/objectmanager.js"></script>
+		<script type="text/javascript" src="src/gamemanager.js"></script>
+		<script type="text/javascript" src="src/animationhandler.js"></script>
+		<script type="text/javascript" src="src/inputhandler.js"></script>
+		
+		<script id="fragmentshader" type="x-shader/x-fragment">
+			precision mediump float;
+			varying vec2 vTexCoords;
+			
+			uniform sampler2D uTexture;
+			
+			void main(void) {
+				gl_FragColor = texture2D(uTexture, vTexCoords);
+			}
+		</script>
+
+		<script id="vertexshader" type="x-shader/x-vertex">
+			attribute vec3 aVertexPosition;
+			attribute vec2 aTexCoords;
+
+			uniform mat4 uMVMatrix;
+			uniform mat4 uPMatrix;
+			
+			varying vec2 vTexCoords;
+
+			void main(void) {
+				gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+				vTexCoords = aTexCoords;
+			}
+		</script>
+		
+		<script type="text/javascript" src="src/main.js"></script>
+	</head>
+	
+	<body onload="webGLStart();">
+		<div style="display:flex;margin-top:10;justify-content: center;">
+			<div>
+				<canvas id="lab01-canvas" width="325" height="650"></canvas>
+			</div>
+			<div style="margin-left:25;">
+				<p style="font-size:25px;margin:0;" id="score"></p>
+				<br>
+				<input type="button" onclick="GameManager.decreaseDifficulty()" value="Decrease difficulty"></input>
+				<input type="text" disabled id="difficulty"></input>
+				<input type="button" onclick="GameManager.increaseDifficulty()" value="Increase difficulty"></input>
+				<br/>
+				<p>	
+					"ArrowRight" or "d": move tetromino one right<br>
+					"ArrowLeft" or "a": move tetromino one left<br>
+					"ArrowUp" or "w": Stop gravity<br>
+					"ArrowDown" or "s": Resume gravity/Increase gravity<br>
+					"q" or "n": Rotate counterclockwise<br>
+					"e" or "m": Rotate clockwise<br>
+				</p>
+			</div>
+		</div>		
+	</body>
+</html>
